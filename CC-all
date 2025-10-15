@@ -1,0 +1,131 @@
+8th prog(docker image)
+
+app.py
+print("Hello world")
+
+DockerFile
+FROM python:3.9-slim
+WORKDIR /app
+COPY . .
+CMD ["python", "app.py"]
+
+
+runing: terminal 
+docker build -t file -f DockerFile .
+docker run file
+
+
+
+
+
+
+
+9th prog
+
+DockerFile.txt
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FastAPI + Docker Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff; /* light blue background */
+      color: #333;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #1e90ff; /* dodger blue */
+      font-size: 3em;
+    }
+    p {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+    body::after {
+      content: "";
+      display: block;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello from FastAPI Pranav</h1>
+  <p>This is a simple static HTML page served by FastAPI on Docker Pranav</p>
+</body>
+</html>
+
+
+main.py
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+import pathlib
+
+app = FastAPI()
+
+@app.get("/")
+async def read_root():
+    return {"message": "hello world"}
+
+@app.get("/items/{item_id}")
+async def read_item(item_id: int):
+    return {"item_id": item_id}
+
+@app.get("/page", response_class=HTMLResponse)
+async def get_page():
+    # Get the path to the index.html file
+    html_path = pathlib.Path("index.html")
+    return html_path.read_text()
+
+
+
+
+requirementes.txt
+fastapi
+uvicorn
+
+
+run: terminal
+docker build -t app -f DockerFile.txt  .
+docker run -p 8000:8000 app
+
+
+change to localhost:8000/page in google chrome
+
+
+
+
+
+hosting a website program
+commands in mobaxtrem
+
+sudo su -
+apt-get install -y apache2
+apt-get update
+apt-get install -y apache2
+systemctl status apache2
+mkdir temp
+cd temp
+
+wget https://www.bnmit.org/
+
+ls -l
+ls -lrt
+mv * /var/www/html
+systemctl enable apache2
+systemctl start apache2
